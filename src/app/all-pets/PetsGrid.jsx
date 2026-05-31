@@ -3,18 +3,12 @@ import Link from "next/link";
 export default function PetsGrid({ pets = [], loading }) {
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="min-h-screen flex justify-center items-center text-red-600">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
- if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
+ 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -53,9 +47,9 @@ export default function PetsGrid({ pets = [], loading }) {
       </div>
 
       {pets.length === 0 && !loading && (
-        <div className="text-center py-20">
-          <h2 className="text-2xl font-semibold">No pets found 🐾</h2>
-        </div>
+        <div className="min-h-screen flex justify-center items-center text-red-600">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
       )}
     </>
   );

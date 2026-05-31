@@ -32,7 +32,7 @@ export default function Pets() {
 
   if (loading) {
     return (
-      <div className="min-h-[300px] flex justify-center items-center">
+      <div className="min-h-[300px] flex justify-center items-center text-red-400">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
@@ -76,7 +76,7 @@ export default function Pets() {
         </p>
 
         <Link
-          href={`/pets/${pet._id}`}
+          href={`/pet/${pet._id}`}
           className="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
         >
           View Details

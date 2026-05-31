@@ -28,30 +28,30 @@ export default function DashboardHome() {
   ];
 
   return (
-    <div className="p-6 md:p-10 space-y-10 sm:pt-20">
+    <div className="p-6 md:p-10 space-y-10 ">
       {/* HEADER */}
-      <div className="bg-white rounded-3xl shadow p-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="bg-white rounded-3xl shadow p-5 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
             Welcome back 👋
           </h1>
 
           <p className="text-gray-500 mt-2">
             Manage your pets and adoption activity
           </p>
-
-          
         </div>
 
-        <div className="text-right">
-          <h2 className="text-xl font-bold text-gray-700">
+        <div className="text-center md:text-right">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-700">
             PetConnect Dashboard
           </h2>
+
           <p className="text-gray-500 text-sm">
             Control center for your pets
           </p>
         </div>
       </div>
+
 
       {/* STATS */}
       {/* <div className="grid md:grid-cols-3 gap-6">

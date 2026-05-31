@@ -66,7 +66,7 @@ export default function AddPet() {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 px-4 py-10 pt-24">
+    <div className="min-h-screen bg-orange-50 px-4 py-10">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-center text-orange-500 mb-8">
           Add a Pet for Adoption

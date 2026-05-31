@@ -86,7 +86,7 @@ export default function MyListings() {
       <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
         <div className="bg-white p-6 rounded-2xl shadow">
           <h3 className="text-gray-500">Total Listings</h3>
-          <p className="text-3xl font-bold">{total}</p>
+          <p className="text-3xl font-bold text-red-600">{total}</p>
         </div>
       </div>
 
@@ -136,7 +136,7 @@ export default function MyListings() {
                 </Link>
 
                 <Link
-                  href={`/pets/${pet._id}`}
+                  href={`/pet/${pet._id}`}
                   className="bg-green-500 text-white py-2 rounded-lg text-center"
                 >
                   View

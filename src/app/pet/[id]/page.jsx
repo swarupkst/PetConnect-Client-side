@@ -1,4 +1,5 @@
 import PetDetails from "./PetDetails";
+import PrivateRoute from "@/components/PrivateRoute";
 
 async function getPet(id) {
   try {
@@ -30,5 +31,8 @@ export default async function PetDetailsPage({ params }) {
     );
   }
 
-  return <PetDetails pet={pet} />;
+  return ( 
+    <PrivateRoute> <PetDetails pet={pet} /></PrivateRoute>
+  );
+ 
 }
