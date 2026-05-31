@@ -15,6 +15,10 @@ export default function MyListings() {
   const [selectedPet, setSelectedPet] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
+  // 🔥 DELETE MODAL STATE
+  const [deleteId, setDeleteId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   // FETCH MY PETS
   useEffect(() => {
     if (!session?.user?.email) return;
@@ -23,13 +27,9 @@ export default function MyListings() {
       try {
         setLoading(true);
 
-        const res = await fetch(
-          `http://localhost:5000/destination`
-        );
-
+        const res = await fetch(`http://localhost:5000/destination`);
         const data = await res.json();
 
-        // filter by owner email (since API doesn’t filter)
         const myPets = data.filter(
           (pet) => pet.ownerEmail === session.user.email
         );
@@ -45,14 +45,17 @@ export default function MyListings() {
     fetchPets();
   }, [session]);
 
-  // DELETE PET
-  const handleDelete = async (id) => {
-    const confirmDelete = confirm("Are you sure?");
-    if (!confirmDelete) return;
+  // OLD DELETE (NOW OPENS MODAL)
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
 
+  // CONFIRM DELETE
+  const confirmDelete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/destination/${id}`,
+        `http://localhost:5000/destination/${deleteId}`,
         {
           method: "DELETE",
         }
@@ -63,12 +66,17 @@ export default function MyListings() {
       if (data.deletedCount > 0) {
         toast.success("Pet deleted");
 
-        setPets((prev) => prev.filter((pet) => pet._id !== id));
+        setPets((prev) =>
+          prev.filter((pet) => pet._id !== deleteId)
+        );
       } else {
         toast.error("Delete failed");
       }
     } catch (error) {
       toast.error("Delete failed");
+    } finally {
+      setShowDeleteModal(false);
+      setDeleteId(null);
     }
   };
 
@@ -86,7 +94,9 @@ export default function MyListings() {
       <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
         <div className="bg-white p-6 rounded-2xl shadow">
           <h3 className="text-gray-500">Total Listings</h3>
-          <p className="text-3xl font-bold text-red-600">{total}</p>
+          <p className="text-3xl font-bold text-red-600">
+            {total}
+          </p>
         </div>
       </div>
 
@@ -123,7 +133,7 @@ export default function MyListings() {
                     setSelectedPet(pet);
                     setOpenModal(true);
                   }}
-                  className="bg-purple-500 text-white py-2 rounded-lg"
+                  className="bg-purple-500 text-white py-2 rounded-lg cursor-pointer"
                 >
                   Requests
                 </button>
@@ -144,7 +154,7 @@ export default function MyListings() {
 
                 <button
                   onClick={() => handleDelete(pet._id)}
-                  className="bg-red-500 text-white py-2 rounded-lg"
+                  className="bg-red-500 text-white py-2 rounded-lg cursor-pointer"
                 >
                   Delete
                 </button>
@@ -154,12 +164,44 @@ export default function MyListings() {
         ))}
       </div>
 
-      {/* MODAL */}
+      {/* REQUEST MODAL */}
       {openModal && selectedPet && (
         <RequestsModal
           pet={selectedPet}
           onClose={() => setOpenModal(false)}
         />
+      )}
+
+      {/* 🔥 DELETE CONFIRMATION MODAL */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl w-[320px] text-center space-y-4">
+            <h2 className="text-lg font-bold text-red-600">
+              Confirm Delete
+            </h2>
+
+            <p className="text-gray-600 text-sm">
+              Are you sure you want to delete this pet? This
+              action cannot be undone.
+            </p>
+
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg cursor-pointer"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

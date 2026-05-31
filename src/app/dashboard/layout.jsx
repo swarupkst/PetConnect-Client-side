@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     if (!isPending && !session?.user) {
       toast.error("Please login first");
-      router.replace("/login");
+      router.replace("/login"); // 👈 push না, replace better
     }
   }, [session, isPending, router]);
 
@@ -29,6 +29,7 @@ export default function DashboardLayout({ children }) {
     }
   };
 
+  // LOADING STATE
   if (isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -37,8 +38,9 @@ export default function DashboardLayout({ children }) {
     );
   }
 
+  // IMPORTANT FIX 👇
   if (!session?.user) {
-    return null;
+    return null; // or loading spinner (better UX)
   }
 
   const menuItems = [
@@ -50,25 +52,25 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-orange-50 pt-16">
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex">
         {/* Sidebar */}
-        <aside className="w-full lg:w-72 lg:min-h-screen bg-white border-b lg:border-b-0 lg:border-r shadow-sm">
+        <aside className="w-72 min-h-screen bg-white border-r shadow-sm">
           <div className="p-6 border-b">
             <h2 className="text-2xl font-bold text-orange-500">
               PetConnect
             </h2>
 
-            <p className="text-sm text-gray-500 mt-2 break-all">
+            <p className="text-sm text-gray-500 mt-2">
               {session?.user?.email}
             </p>
           </div>
 
-          <nav className="p-4 flex flex-wrap lg:block gap-2 lg:space-y-2">
+          <nav className="p-4 space-y-2">
             {menuItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className={`flex-1 lg:block text-center px-4 py-3 rounded-xl transition min-w-[140px] ${
+                className={`block px-4 py-3 rounded-xl transition ${
                   pathname === item.path
                     ? "bg-orange-500 text-white"
                     : "hover:bg-orange-100 text-gray-700"
@@ -81,10 +83,10 @@ export default function DashboardLayout({ children }) {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 min-w-0">
-          <header className="bg-white border-b px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center">
+        <main className="flex-1">
+          <header className="bg-white border-b px-8 py-5 flex justify-between items-center">
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
+              <h1 className="text-2xl font-bold text-gray-800">
                 Dashboard
               </h1>
 
@@ -93,18 +95,11 @@ export default function DashboardLayout({ children }) {
               </p>
             </div>
 
-            {/* Logout Button (Optional) */}
-            {/* 
-            <button
-              onClick={handleLogout}
-              className="btn btn-sm bg-orange-500 hover:bg-orange-600 text-white border-none"
-            >
-              Logout
-            </button> 
-            */}
+            {/* Optional logout button */}
+           
           </header>
 
-          <div className="p-4 sm:p-6 lg:p-8">{children}</div>
+          <div className="p-8">{children}</div>
         </main>
       </div>
     </div>

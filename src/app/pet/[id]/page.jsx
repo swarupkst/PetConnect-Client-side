@@ -16,6 +16,32 @@ async function getPet(id) {
   }
 }
 
+  const handleDelete = async (id) => {
+    const confirmDelete = confirm("Are you sure?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/destination/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.deletedCount > 0) {
+        toast.success("Pet deleted");
+
+        setPets((prev) => prev.filter((pet) => pet._id !== id));
+      } else {
+        toast.error("Delete failed");
+      }
+    } catch (error) {
+      toast.error("Delete failed");
+    }
+  };
+
 export default async function PetDetailsPage({ params }) {
   const { id } = await params; // ✅ FIX HERE
 
