@@ -16,7 +16,7 @@ export default function PetDetails({ pet }) {
   // delete modal state
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-
+  const [adoptionStatus, setAdoptionStatus] = useState(null);
   const isOwner = session?.user?.email === pet.ownerEmail;
 
   // Loading
@@ -40,11 +40,15 @@ export default function PetDetails({ pet }) {
 
         const data = await res.json();
 
-        const alreadyRequested = data.some(
-          (req) => req.petId === pet._id
-        );
+        const existing = data.find((req) => req.petId === pet._id);
 
-        setIsRequested(alreadyRequested);
+        if (existing) {
+          setIsRequested(true);
+          setAdoptionStatus(existing.status); // 👈 ADD THIS
+        } else {
+          setIsRequested(false);
+          setAdoptionStatus(null);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -95,6 +99,7 @@ export default function PetDetails({ pet }) {
         toast.success("Adoption request submitted!");
         setIsModalOpen(false);
         setIsRequested(true);
+        setAdoptionStatus("pending"); // 👈 ADD THIS
         form.reset();
       } else {
         toast.error("Failed to submit request");
@@ -192,16 +197,22 @@ export default function PetDetails({ pet }) {
               </div>
             ) : (
               <button
-                onClick={handleAdopt}
-                disabled={isRequested}
-                className={`mt-6 px-8 py-3 rounded-xl cursor-pointer ${
-                  isRequested
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-orange-500 text-white"
-                }`}
-              >
-                {isRequested ? "Requested" : "Adopt Now"}
-              </button>
+  onClick={handleAdopt}
+  disabled={isRequested && adoptionStatus !== "rejected"}
+  className={`mt-6 px-8 py-3 rounded-xl cursor-pointer ${
+    adoptionStatus === "approved"
+      ? "bg-green-500 text-white cursor-not-allowed"
+      : isRequested
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-orange-500 text-white"
+  }`}
+>
+  {adoptionStatus === "approved"
+    ? "Adopted"
+    : isRequested
+    ? "Requested"
+    : "Adopt Now"}
+</button>
             )}
           </div>
         </div>
