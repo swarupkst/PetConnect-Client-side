@@ -2,20 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { authClient } from "@/app/lib/auth-client";
 
 export default function AdminRequests() {
+  const { data: session } = authClient.useSession();
+
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
   useEffect(() => {
-    fetchRequests();
-  }, []);
+    if (session?.user?.email) {
+      fetchRequests();
+    }
+  }, [session]);
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch("http://localhost:5000/admin/adoptions");
+      const res = await fetch(
+        `http://localhost:5000/admin/adoptions?ownerEmail=${session.user.email}`
+      );
       const data = await res.json();
+
       setRequests(data);
       setLoading(false);
     } catch (err) {
@@ -24,7 +31,6 @@ export default function AdminRequests() {
     }
   };
 
-  // Update Status
   const updateStatus = async (id, status) => {
     try {
       const res = await fetch(
@@ -42,11 +48,14 @@ export default function AdminRequests() {
 
       if (data.modifiedCount > 0) {
         toast.success(`Marked as ${status}`);
+
         setRequests((prev) =>
           prev.map((r) =>
             r._id === id ? { ...r, status } : r
           )
         );
+      } else {
+        toast.error("No changes made");
       }
     } catch (err) {
       toast.error("Failed to update");
@@ -69,7 +78,7 @@ export default function AdminRequests() {
 
       <div className="overflow-x-auto bg-white shadow rounded-xl">
         <table className="table w-full">
-          <thead>
+          <thead className="text-black">
             <tr>
               <th>Pet</th>
               <th>User</th>
@@ -81,7 +90,7 @@ export default function AdminRequests() {
 
           <tbody>
             {requests.map((req) => (
-              <tr key={req._id}>
+              <tr className="text-black" key={req._id}>
                 <td>{req.petName}</td>
                 <td>{req.adopterEmail}</td>
                 <td>{req.pickupDate}</td>
@@ -101,25 +110,27 @@ export default function AdminRequests() {
                 </td>
 
                 <td className="flex gap-2">
-                  <button
-                    onClick={() =>
-                      updateStatus(req._id, "approved")
-                    }
-                    className="btn btn-sm bg-green-500 text-white"
-                    disabled={req.status === "approved"}
-                  >
-                    Approve
-                  </button>
+                  {req.status === "pending" ? (
+                    <>
+                      <button
+                        onClick={() => updateStatus(req._id, "approved")}
+                        className="btn btn-sm bg-green-500 text-white"
+                      >
+                        Approve
+                      </button>
 
-                  <button
-                    onClick={() =>
-                      updateStatus(req._id, "rejected")
-                    }
-                    className="btn btn-sm bg-red-500 text-white"
-                    disabled={req.status === "rejected"}
-                  >
-                    Reject
-                  </button>
+                      <button
+                        onClick={() => updateStatus(req._id, "rejected")}
+                        className="btn btn-sm bg-red-500 text-white"
+                      >
+                        Reject
+                      </button>
+                    </>
+                  ) : (
+                    <span className="text-gray-400 text-sm">
+                      Finalized
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}

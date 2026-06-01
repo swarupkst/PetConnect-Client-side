@@ -88,7 +88,7 @@ export default function Pets() {
 
       {pets.length === 0 && (
         <div className="text-center py-20">
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-xl font-semibold text-red-500">
             No pets found 🐾
           </h2>
         </div>
