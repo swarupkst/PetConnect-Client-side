@@ -88,11 +88,14 @@ export default function EditPet() {
 
       const data = await res.json();
 
-      if (data.modifiedCount > 0 || data.acknowledged) {
+      if (res.ok) {
         toast.success("Pet updated successfully");
-        router.push("/dashboard/my-listings");
+
+        setTimeout(() => {
+          router.push("/dashboard/listings");
+        }, 1000);
       } else {
-        toast.error("No changes made");
+        toast.error("Update failed");
       }
     } catch (error) {
       toast.error("Update failed");
@@ -102,30 +105,7 @@ export default function EditPet() {
   };
 
   // DELETE
-  const handleDelete = async () => {
-    const ok = confirm("Are you sure?");
-    if (!ok) return;
 
-    try {
-      const res = await fetch(
-        `http://localhost:5000/destination/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const data = await res.json();
-
-      if (data.deletedCount > 0) {
-        toast.success("Deleted successfully");
-        router.push("/dashboard/my-listings");
-      } else {
-        toast.error("Delete failed");
-      }
-    } catch (error) {
-      toast.error("Delete failed");
-    }
-  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -321,11 +301,12 @@ export default function EditPet() {
 
             <button
               type="button"
-              onClick={handleDelete}
-              className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold"
+              onClick={() => router.push("/dashboard/listings")}
+              className="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 rounded-xl font-semibold"
             >
-              Delete
+              Cancel
             </button>
+
           </div>
         </form>
       </div>

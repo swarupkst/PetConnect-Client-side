@@ -53,34 +53,38 @@ export default function MyListings() {
 
   // CONFIRM DELETE
   const confirmDelete = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:5000/destination/${deleteId}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const data = await res.json();
-
-      if (data.deletedCount > 0) {
-        toast.success("Pet deleted");
-
-        setPets((prev) =>
-          prev.filter((pet) => pet._id !== deleteId)
-        );
-      } else {
-        toast.error("Delete failed");
+  try {
+    const res = await fetch(
+      `http://localhost:5000/destination/${deleteId}`,
+      {
+        method: "DELETE",
       }
-    } catch (error) {
-      toast.error("Delete failed");
-    } finally {
-      setShowDeleteModal(false);
-      setDeleteId(null);
+    );
+
+    if (!res.ok) {
+      throw new Error();
     }
-  };
+
+    toast.success("Pet deleted");
+
+    setPets((prev) =>
+      prev.filter((pet) => pet._id !== deleteId)
+    );
+  } catch (error) {
+    toast.error("Delete failed");
+  } finally {
+    setShowDeleteModal(false);
+    setDeleteId(null);
+  }
+};
 
   const total = pets.length;
+
+const adopted = pets.filter(
+  (pet) => pet.adoptionStatus === "Adopted"
+).length;
+
+const available = total - adopted;
 
   if (loading) return <LoadingSpinner />;
 
@@ -90,15 +94,31 @@ export default function MyListings() {
         My Listings
       </h1>
 
-      {/* STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h3 className="text-gray-500">Total Listings</h3>
-          <p className="text-3xl font-bold text-red-600">
-            {total}
-          </p>
-        </div>
-      </div>
+    {/* STATS */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+  <div className="bg-white p-6 rounded-2xl shadow">
+  <h3 className="text-gray-500">Total Listings</h3>
+  <p className="text-3xl font-bold text-red-600">
+    {total}
+  </p>
+</div>
+
+<div className="bg-white p-6 rounded-2xl shadow">
+  <h3 className="text-gray-500">Available</h3>
+  <p className="text-3xl font-bold text-green-600">
+    {available}
+  </p>
+</div>
+
+<div className="bg-white p-6 rounded-2xl shadow">
+  <h3 className="text-gray-500">Adopted</h3>
+  <p className="text-3xl font-bold text-blue-600">
+    {adopted}
+  </p>
+</div>
+
+</div>
 
       {/* PET CARDS */}
       <div className="grid md:grid-cols-3 gap-6">
@@ -114,7 +134,7 @@ export default function MyListings() {
             />
 
             <div className="p-5 space-y-2">
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl text-black font-bold">
                 {pet.petName}
               </h2>
 
@@ -128,15 +148,14 @@ export default function MyListings() {
 
               {/* BUTTONS */}
               <div className="grid grid-cols-2 gap-2 pt-3">
-                <button
-                  onClick={() => {
-                    setSelectedPet(pet);
-                    setOpenModal(true);
-                  }}
-                  className="bg-purple-500 text-white py-2 rounded-lg cursor-pointer"
+                
+
+                  <Link
+                  href={`/dashboard/admin/requests`}
+                  className="bg-purple-500 text-white py-2 rounded-lg cursor-pointer text-center"
                 >
-                  Requests
-                </button>
+                  Request
+                </Link>
 
                 <Link
                   href={`/dashboard/edit/${pet._id}`}
