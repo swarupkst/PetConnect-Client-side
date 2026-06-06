@@ -282,7 +282,7 @@ export default function AddPet() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-8 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-3 rounded-xl font-semibold transition"
+            className="w-full mt-8 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-3 rounded-xl font-semibold transition cursor-pointer"
           >
             {loading ? "Adding Pet..." : "Add Pet"}
           </button>

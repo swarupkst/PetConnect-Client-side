@@ -6,10 +6,11 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Logo from "../../../../public/asset/logo.png";
 import { authClient } from "@/app/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { data: session, refetch } = authClient.useSession();
   const user = session?.user;
@@ -36,6 +37,12 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
+  // ✅ ACTIVE LINK STYLE HELPER
+  const linkStyle = (path) =>
+    pathname === path
+      ? "text-orange-500 font-semibold border-b-2 border-orange-500 pb-1"
+      : "hover:text-orange-500";
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="container mx-auto px-4">
@@ -55,15 +62,33 @@ export default function Navbar() {
 
           {/* MENU */}
           <div className="text-black hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6">
-            <Link href="/" onClick={closeMenus}>Home</Link>
-            <Link href="/all-pets" onClick={closeMenus}>All Pets</Link>
+            <Link href="/" onClick={closeMenus} className={linkStyle("/")}>
+              Home
+            </Link>
+
+            <Link
+              href="/all-pets"
+              onClick={closeMenus}
+              className={linkStyle("/all-pets")}
+            >
+              All Pets
+            </Link>
 
             {user && (
               <>
-                <Link href="/dashboard/requests" onClick={closeMenus}>
+                <Link
+                  href="/dashboard/requests"
+                  onClick={closeMenus}
+                  className={linkStyle("/dashboard/requests")}
+                >
                   My Requests
                 </Link>
-                <Link href="/dashboard/add-pet" onClick={closeMenus}>
+
+                <Link
+                  href="/dashboard/add-pet"
+                  onClick={closeMenus}
+                  className={linkStyle("/dashboard/add-pet")}
+                >
                   Add Pet
                 </Link>
               </>
@@ -78,17 +103,11 @@ export default function Navbar() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center gap-2"
                 >
-
-                  {/* 🔥 FIXED IMAGE PART */}
-                  {user ? (
-                    <img
-                      src={user.image}
-                      alt="profile"
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                  ) : (
-                    ""
-                  )}
+                  <img
+                    src={user.image}
+                    alt="profile"
+                    className="w-10 h-10 rounded-full object-cover cursor-pointer"
+                  />
                 </button>
 
                 {/* DROPDOWN */}
@@ -104,7 +123,7 @@ export default function Navbar() {
 
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500 cursor-pointer"
                     >
                       Logout
                     </button>
@@ -134,18 +153,41 @@ export default function Navbar() {
         {/* MOBILE MENU */}
         {isOpen && (
           <div className="md:hidden flex flex-col gap-3 pb-4 text-black">
-            <Link href="/" onClick={closeMenus}>Home</Link>
-            <Link href="/all-pets" onClick={closeMenus}>All Pets</Link>
+            <Link href="/" onClick={closeMenus} className={linkStyle("/")}>
+              Home
+            </Link>
+
+            <Link
+              href="/all-pets"
+              onClick={closeMenus}
+              className={linkStyle("/all-pets")}
+            >
+              All Pets
+            </Link>
 
             {user && (
               <>
-                <Link href="/dashboard/requests" onClick={closeMenus}>
+                <Link
+                  href="/dashboard/requests"
+                  onClick={closeMenus}
+                  className={linkStyle("/dashboard/requests")}
+                >
                   My Requests
                 </Link>
-                <Link href="/dashboard/add-pet" onClick={closeMenus}>
+
+                <Link
+                  href="/dashboard/add-pet"
+                  onClick={closeMenus}
+                  className={linkStyle("/dashboard/add-pet")}
+                >
                   Add Pet
                 </Link>
-                <Link href="/dashboard" onClick={closeMenus}>
+
+                <Link
+                  href="/dashboard"
+                  onClick={closeMenus}
+                  className={linkStyle("/dashboard")}
+                >
                   Dashboard
                 </Link>
 

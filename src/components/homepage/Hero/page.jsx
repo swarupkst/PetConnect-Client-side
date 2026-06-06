@@ -21,7 +21,7 @@ export default function Hero() {
                 </div>
 
 
-                {/* RIGHT IMAGE */}
+              
 
 
             </div>

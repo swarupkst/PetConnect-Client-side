@@ -1,5 +1,4 @@
 import PetDetails from "./PetDetails";
-import PrivateRoute from "@/components/PrivateRoute";
 
 async function getPet(id) {
   try {
@@ -19,14 +18,13 @@ async function getPet(id) {
 
 
 export default async function PetDetailsPage({ params }) {
-  const { id } = await params; // ✅ FIX HERE
-
+  const { id } = await params; 
   const pet = await getPet(id);
 
   if (!pet) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-2xl font-semibold">
+        <h2 className="text-2xl font-semibold text-red-600">
           Pet not found 🐾
         </h2>
       </div>
@@ -34,7 +32,7 @@ export default async function PetDetailsPage({ params }) {
   }
 
   return ( 
-    <PrivateRoute> <PetDetails pet={pet} /></PrivateRoute>
+     <PetDetails pet={pet} />
   );
  
 }

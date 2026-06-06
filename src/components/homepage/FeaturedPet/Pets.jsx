@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 
-
 export default function Pets() {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,53 +37,53 @@ export default function Pets() {
     );
   }
 
+  // ✅ NEW PET FIRST (LATEST SORT)
+  const sortedPets = [...pets].sort((a, b) => {
+    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {sortedPets.slice(0, 3).map((pet) => (
+          <div
+            key={pet._id}
+            className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+          >
+            {/* Image */}
+            <div className="relative w-full h-52">
+              <Image
+                src={pet.image}
+                alt={pet.petName}
+                fill
+                className="object-cover"
+              />
+            </div>
 
-  {pets.slice(0, 3).map((pet) => (
-    <div
-      key={pet._id}
-      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
-    >
-      {/* Image */}
-      <div className="relative w-full h-52">
-        <Image
-          src={pet.image}
-          alt={pet.petName}
-          fill
-          className="object-cover"
-        />
+            {/* Info */}
+            <div className="p-5">
+              <h3 className="text-xl font-semibold text-black">{pet.petName}</h3>
+
+              <p className="text-gray-500 text-sm">
+                {pet.species} • {pet.breed}
+              </p>
+
+              <p className="text-gray-400 text-sm">📍 {pet.location}</p>
+
+              <p className="text-orange-500 font-semibold mt-1">
+                Fee: ${pet.adoptionFee}
+              </p>
+
+              <Link
+                href={`/pet/${pet._id}`}
+                className="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+              >
+                View Details
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
-
-      {/* Info */}
-      <div className="p-5">
-        <h3 className="text-xl font-semibold">
-          {pet.petName}
-        </h3>
-
-        <p className="text-gray-500 text-sm">
-          {pet.species} • {pet.breed}
-        </p>
-
-        <p className="text-gray-400 text-sm">
-          📍 {pet.location}
-        </p>
-
-        <p className="text-orange-500 font-semibold mt-1">
-          Fee: ${pet.adoptionFee}
-        </p>
-
-        <Link
-          href={`/pet/${pet._id}`}
-          className="mt-4 inline-block bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
-        >
-          View Details
-        </Link>
-      </div>
-    </div>
-  ))}
-</div>
 
       {pets.length === 0 && (
         <div className="text-center py-20">
@@ -92,9 +91,8 @@ export default function Pets() {
             No pets found 🐾
           </h2>
         </div>
-
-        
       )}
+
       <div className="flex justify-center pt-10">
         <Link
           href="/all-pets"

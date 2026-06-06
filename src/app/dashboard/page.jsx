@@ -25,6 +25,13 @@ export default function DashboardHome() {
       link: "/dashboard/requests",
       color: "bg-blue-500",
     },
+
+    {
+      title: "Wishlist",
+      desc: "Saved pets you liked",
+      link: "/dashboard/wishlist",
+      color: "bg-pink-500",
+    },
   ];
 
   return (
@@ -52,40 +59,15 @@ export default function DashboardHome() {
         </div>
       </div>
 
-
-      {/* STATS */}
-      {/* <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h3 className="text-gray-500">Quick Access</h3>
-          <p className="text-2xl font-bold">Dashboard</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h3 className="text-gray-500">Account Status</h3>
-          <p className="text-2xl font-bold text-green-500">
-            Active
-          </p>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h3 className="text-gray-500">Role</h3>
-          <p className="text-2xl font-bold text-orange-500">
-            Pet Owner
-          </p>
-        </div>
-      </div> */}
-
       {/* FEATURE CARDS */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         {cards.map((item, i) => (
           <Link
             key={i}
             href={item.link}
             className="bg-white rounded-2xl shadow p-6 hover:scale-[1.03] transition duration-200"
           >
-            <div
-              className={`w-12 h-12 ${item.color} rounded-xl mb-4`}
-            ></div>
+            <div className={`w-12 h-12 ${item.color} rounded-xl mb-4`}></div>
 
             <h2 className="text-xl font-bold text-gray-800">
               {item.title}

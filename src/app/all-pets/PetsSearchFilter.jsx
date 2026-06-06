@@ -14,14 +14,14 @@ export default function PetsSearchFilter({
         placeholder="Search by pet name..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="input input-bordered w-full bg-gray-600"
+        className="input input-bordered w-full bg-gray-600 text-white"
       />
 
       {/* Species Filter */}
       <select
         value={speciesFilter}
         onChange={(e) => setSpeciesFilter(e.target.value)}
-        className="select select-bordered w-full md:w-60 bg-gray-600"
+        className="select select-bordered w-full md:w-60 bg-gray-600 text-white"
       >
         {speciesList?.length > 0 ? (
           speciesList.map((species, index) => (

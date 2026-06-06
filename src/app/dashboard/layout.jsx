@@ -43,10 +43,10 @@ export default function DashboardLayout({ children }) {
       <div className="flex flex-col md:flex-row">
 
         {/* SIDEBAR (TOP on mobile/tablet, LEFT on desktop) */}
-        <aside className="w-full md:w-72 bg-white border-b md:border-b-0 md:border-r shadow-sm">
+        <aside className="w-full md:w-72 bg-white border-none md:border-b-0 md:border-r shadow-sm">
 
           {/* BRAND */}
-          <div className="p-4 md:p-6 border-b">
+          <div className="p-4 md:p-6 border-none">
             <h2 className="text-xl md:text-2xl font-bold text-orange-500">
               PetConnect
             </h2>
@@ -76,7 +76,7 @@ export default function DashboardLayout({ children }) {
 
         {/* MAIN CONTENT */}
         <main className="flex-1">
-          <header className="bg-white border-b px-4 sm:px-6 md:px-8 py-5">
+          <header className="bg-white border-none px-4 sm:px-6 md:px-8 py-5">
             <h1 className="text-xl md:text-2xl font-bold text-gray-800">
               Dashboard
             </h1>

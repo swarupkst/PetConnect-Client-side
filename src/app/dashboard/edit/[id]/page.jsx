@@ -294,7 +294,7 @@ export default function EditPet() {
             <button
               type="submit"
               disabled={saving}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold cursor-pointer"
             >
               {saving ? "Updating..." : "Update Pet"}
             </button>
@@ -302,7 +302,7 @@ export default function EditPet() {
             <button
               type="button"
               onClick={() => router.push("/dashboard/listings")}
-              className="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 rounded-xl font-semibold"
+              className="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 rounded-xl font-semibold cursor-pointer"
             >
               Cancel
             </button>
