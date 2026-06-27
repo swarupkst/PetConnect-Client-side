@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐾 PetNest
 
-## Getting Started
+## 📌 Purpose
 
-First, run the development server:
+PetNest is a modern pet adoption and pet management platform designed to connect pet lovers with pets in need of a home. The platform allows users to browse available pets, add new pets for adoption, manage pet information, and provide a smooth experience for both adopters and pet owners.
+
+## 🌐 Live Links
+
+* **Live Site:** https://petnest-three.vercel.app
+* **Github Repo Frontend:** https://github.com/swarupkst/PetConnect-Client-side
+* **Github Repo Backend:** https://github.com/swarupkst/PetConnect-Server-side
+
+## ✨ Features
+
+* 🔐 Secure user authentication and authorization system.
+* 🐶 Browse and search available pets for adoption.
+* ➕ Add new pets with detailed information and images.
+* 📝 Update and manage existing pet information.
+* ❤️ Save favorite pets to a wishlist for later viewing.
+* 📱 Fully responsive design for mobile, tablet, and desktop devices.
+* ⚡ Fast and interactive user interface with modern technologies.
+* 📊 Dynamic data fetching and real-time updates from the backend API.
+
+## 📦 NPM Packages Used
+
+### Frontend
+
+* `react`
+* `react-router-dom`
+* `axios`
+* `tailwindcss`
+* `daisyui`
+* `react-icons`
+* `react-hot-toast`
+* `swiper`
+* `framer-motion`
+
+### Backend
+
+* `express`
+* `cors`
+* `dotenv`
+* `mongodb`
+* `mongoose`
+* `jsonwebtoken`
+* `cookie-parser`
+* `bcryptjs`
+
+## 🚀 Installation
+
+### Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run frontend
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run backend
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👨‍💻 Tech Stack
 
-## Learn More
+**Frontend:** React, Tailwind CSS, DaisyUI
 
-To learn more about Next.js, take a look at the following resources:
+**Backend:** Node.js, Express.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Database:** MongoDB
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Deployment:** Vercel
