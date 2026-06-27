@@ -25,7 +25,8 @@ PetNest is a modern pet adoption and pet management platform designed to connect
 
 ### Frontend
 
-* `react`
+* `react.js`
+* `next.js`
 * `react-router-dom`
 * `axios`
 * `tailwindcss`
@@ -38,13 +39,12 @@ PetNest is a modern pet adoption and pet management platform designed to connect
 ### Backend
 
 * `express`
-* `cors`
+* `node.js`
 * `dotenv`
 * `mongodb`
 * `mongoose`
 * `jsonwebtoken`
 * `cookie-parser`
-* `bcryptjs`
 
 ## 🚀 Installation
 
@@ -74,7 +74,7 @@ npm start
 
 ## 👨‍💻 Tech Stack
 
-**Frontend:** React, Tailwind CSS, DaisyUI
+**Frontend:** React.js, Next.js, Tailwind CSS, DaisyUI
 
 **Backend:** Node.js, Express.js
 
