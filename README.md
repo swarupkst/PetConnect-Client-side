@@ -1,8 +1,8 @@
-# 🐾 PetNest
+# 🐾 PetConnect
 
 ## 📌 Purpose
 
-PetNest is a modern pet adoption and pet management platform designed to connect pet lovers with pets in need of a home. The platform allows users to browse available pets, add new pets for adoption, manage pet information, and provide a smooth experience for both adopters and pet owners.
+PetConnect is a modern pet adoption and pet management platform designed to connect pet lovers with pets in need of a home. The platform allows users to browse available pets, add new pets for adoption, manage pet information, and provide a smooth experience for both adopters and pet owners.
 
 ## 🌐 Live Links
 
